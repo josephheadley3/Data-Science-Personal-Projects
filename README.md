@@ -11,12 +11,11 @@ This webpage serves to summarize the work that I have completed in some of my da
 
 4. Data Visualizations: Created the following visualizations to display the distribution of genres, media, and source materials among the anime in the dataset.
 
-<img src="https://github.com/josephheadley3/Data-Science-Personal-Projects/blob/master/Anime_Ranking_Project/Data_Visualizations/anime_genres.png" width="300" height="300">
-![](/Anime_Ranking_Project/Data_Visualizations/anime_genres.png){:height="50%" width="50%"}
+<img src="https://github.com/josephheadley3/Data-Science-Personal-Projects/blob/master/Anime_Ranking_Project/Data_Visualizations/anime_genres.png" width="600" height="600">
 
-![](/Anime_Ranking_Project/Data_Visualizations/anime_media.png)
+<img src="https://github.com/josephheadley3/Data-Science-Personal-Projects/blob/master/Anime_Ranking_Project/Data_Visualizations/anime_media.png" width="600" height="600">
 
-![](/Anime_Ranking_Project/Data_Visualizations/anime_sources.png)
+<img src="https://github.com/josephheadley3/Data-Science-Personal-Projects/blob/master/Anime_Ranking_Project/Data_Visualizations/anime_sources.png" width="600" height="600">
 
 5. Data Analysis Part 1: Utilized natural language processing and machine learning to predict anime genres, specifically between anime that have "Action" as a primary genre (Genre 1) and anime that have "Dementia" as a primary genre, based on words present in synopses.
 
