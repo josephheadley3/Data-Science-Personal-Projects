@@ -1,37 +1,7 @@
-## Welcome to GitHub Pages
+# Data Science Personal Projects Portfolio
+This webpage serves to summarize the work that I have completed in some of my data science projects such as the processes of data collection and cleaning, data analysis, and data visualizations.
 
-You can use the [editor on GitHub](https://github.com/josephheadley3/Data-Science-Personal-Projects/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/josephheadley3/Data-Science-Personal-Projects/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+# Project 1: Anime Ranking Analysis Project Overview
+1. Collection: Webscraped myanimelist.net using python with requests, beautifulsoup, and regex modules to gather data on the anime ranked top 100, "middle 100", and bottom 100 into 6 separate .csv files
+2. Cleaning: Combined data from .csv files into one dataframe, changed null values and unnecessary cell elements to "Unavailable" where necessary, and imputed for known values that were excluded in collection phase.
+3. Feature Engineering: Standardized the categories of the "Age Rating" column and added the columns "Total Minutes" and "Synopsis Length".
