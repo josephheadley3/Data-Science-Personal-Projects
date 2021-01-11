@@ -2,9 +2,12 @@
 This webpage serves to summarize the work that I have completed in some of my data science projects such as the processes of data collection and cleaning, data analysis, and data visualizations.
 
 
-# Project 1: Anime Ranking Analysis Project Overview
+[# Project 1: Anime Ranking Analysis Project Overview] (https://github.com/josephheadley3/Data-Science-Personal-Projects/tree/master/Anime_Ranking_Project)
 1. Collection: Webscraped myanimelist.net using python with requests, beautifulsoup, and regex modules to gather data on the anime ranked top 100, "middle 100", and bottom 100 into 6 separate .csv files
 
 2. Cleaning: Combined data from .csv files into one dataframe, changed null values and unnecessary cell elements to "Unavailable" where necessary, and imputed for known values that were excluded in collection phase.
 
 3. Feature Engineering: Standardized the categories of the "Age Rating" column and added the columns "Total Minutes" and "Synopsis Length".
+
+4. Data Visualizations: Created the following visualizations to display the distribution of genres, media, and source materials among the anime in the dataset.
+
