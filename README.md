@@ -11,7 +11,7 @@ This webpage serves to summarize the work that I have completed in some of my da
 
 4. Data Visualizations: Created the following visualizations to display the distribution of genres, media, and source materials among the anime in the dataset.
 
-![](/Anime_Ranking_Project/Data_Visualizations/anime_genres.png =100x20)
+![](/Anime_Ranking_Project/Data_Visualizations/anime_genres.png =100x)
 
 ![](/Anime_Ranking_Project/Data_Visualizations/anime_media.png)
 
