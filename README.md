@@ -1,6 +1,6 @@
-[# Data Science Personal Projects Portfolio](https://josephheadley3.github.io/Data-Science-Personal-Projects/)
+# Data Science Personal Projects Portfolio
 
-This webpage serves to summarize the work that I have completed in some of my data science projects such as the processes of data collection and cleaning, data analysis, and data visualizations.
+[This webpage](https://josephheadley3.github.io/Data-Science-Personal-Projects/) serves to summarize the work that I have completed in some of my data science projects such as the processes of data collection and cleaning, data analysis, and data visualizations.
 
 
 [# Project 1: Anime Ranking Analysis Project Overview](https://github.com/josephheadley3/Data-Science-Personal-Projects/tree/master/Anime_Ranking_Project)
