@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Data Science Projects</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header id="main-header">
+            <div class="container">
+                <h1>Joey-Of-All-Trades: Chronicling My Data Science Journey</h1>
+            </div>
+        </header>
+
+        <nav id="navbar">
+            <div class="container">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="projects.html">Data Science Projects</a></li>
+                    <li><a href="blogs.html">Blog</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            <article class="post">
+                <h1 class="project-title"><a href="https://github.com/josephheadley3/Data-Science-Personal-Projects/tree/master/Anime_Ranking_Project" target="_blank">Anime Ranking Analysis Project Overview</a></h1>
+                <div class="project-title">
+                    <h3>Posted on 1/15/20</h3>
+                </div>
+                <hr>
+                <ol>
+                    <li><h3>Collection: Webscraped myanimelist.net using python with requests, beautifulsoup, and regex modules to gather data on the anime ranked top 100, "middle 100", and bottom 100 into 6 separate .csv files</h3></li>
+                    <li><h3>Cleaning: Combined data from .csv files into one dataframe, changed null values and unnecessary cell elements to "Unavailable" where necessary, and imputed for known values that were excluded in collection phase.</h3></li>
+                    <li><h3>Feature Engineering: Standardized the categories of the "Age Rating" column and added the columns "Total Minutes" and "Synopsis Length".</h3></li>
+                    <li><h3>Data Visualizations: Created the following visualizations to display the distribution of genres, media, and source materials among the anime in the dataset.</h3></li>
+                    <div class="container"><div class="p-box-1"></div></div>
+                    <div class="clr"></div>
+                    
+                    <div class="p-box-2"></div>
+                    <div class="p-box-3"></div>
+                    <div class="clr"></div>
+                    <li><h3>Data Analysis Part 1: Utilized natural language processing and machine learning to predict anime genres, specifically between anime that have "Action" as a primary genre (Genre 1) and anime that have "Dementia" as a primary genre, based on words present in synopses.</h3></li>
+                    <li><h3>Data Analysis Part 2: Utilized multivariate linear regression to analyze the relationship between quantitative independent variables of "Number of Episodes", "Number of Members", "Total Minutes", and "Synopsis Length" and the score given to an anime and checked values for different forms of error.</h3></li>
+                </ol>
+            </article>
+        </div>
+    </body>
+</html>

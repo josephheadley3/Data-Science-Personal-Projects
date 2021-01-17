@@ -1,0 +1,136 @@
+a{
+    color: aqua;
+}
+
+a:hover{
+    color: green;
+}
+
+/* a:visited{
+    color:green;
+} */
+
+body{
+    background:crimson;
+}
+
+.container{
+    width:90%;
+    margin:auto;
+    overflow: hidden;
+}
+
+.clr{
+    clear:both;
+}
+
+#main-header{
+    text-align:center;
+    background:gold;
+    color:purple;
+    padding:10px;
+}
+
+#navbar{
+    background:purple;
+    color:gold;
+    padding:10px;
+}
+
+#navbar a{
+    color:gold;
+}
+
+#navbar a:hover{
+    color:green;
+}
+
+#navbar ul{
+    text-align:center;
+    padding:0;
+    list-style:none;
+}
+
+#navbar li{
+    display: inline;
+    padding:13px 13px;
+    margin:0 35px;
+    border: 4px solid black;
+    font: normal 28px Georgia;
+}
+
+.post{
+    background:gold;
+    /* position: relative; */
+    padding:10px;
+    margin: 15px 0;
+    border: 3px solid black;
+}
+
+.project-title{
+    color: purple;
+    text-align: center;
+}
+
+.post a{
+    color:crimson;
+}
+
+.post a:hover{
+    color:green;
+}
+
+.post h2{
+    color:purple;
+}
+
+/* .article-title{
+    color:purple;
+    text-decoration: underline;
+} */
+
+.p-box-1{
+    float:center;
+    width: 1000px;
+    height: 500px;
+    border:1px solid #000;
+    margin: 30px 0;
+    background-image:url('images/anime_genres.png');
+    background-size: 1000px 500px;
+    background-repeat:no-repeat;
+}
+
+.p-box-2{
+    float:left;
+    width: 50%;
+    height: 570px;
+    border:1px solid #000;
+    margin: 30px 0;
+    background-image:url('images/anime_media.png');
+    background-size: 605px 570px;
+    background-repeat:no-repeat;
+    box-sizing: border-box;
+}
+
+.p-box-3{
+    float:right;
+    width: 50%;
+    height: 570px;
+    border:1px solid #000;
+    margin: 30px 0;
+    background-image:url('images/anime_sources.png');
+    background-size: 605px 570px;
+    background-repeat:no-repeat;
+    box-sizing: border-box;
+}
+
+.p-box-4{
+    float:center;
+    width: 500px;
+    height: 500px;
+    border:1px solid #000;
+    margin: 30px 0 30px 400px;
+    background-image:url('images/profile_pic.jpg');
+    background-size: 500px 500px;
+    background-repeat:no-repeat;
+}
