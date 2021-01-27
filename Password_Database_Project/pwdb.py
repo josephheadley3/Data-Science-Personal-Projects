@@ -1,5 +1,5 @@
 import sqlite3
-import rpw
+import PwordGen
 from tabulate import tabulate
 import pickle
 
