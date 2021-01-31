@@ -1,5 +1,5 @@
 import sqlite3
-import PwordGen
+import PwordGen as pwg
 from tabulate import tabulate
 import pickle
 
@@ -150,7 +150,7 @@ def interface():
             
             if(pw_question.lower() in ["y", "yes"]):
                 print("\nNoted. Running the random password generator now.")
-                pw = rpw.makepword()
+                pw = pwg.makepword()
             else:
                 pw = input("\nNoted. What password would you like to use?\n> ")
 
@@ -206,7 +206,7 @@ def interface():
             
             if(pw_question.lower() in ["y", "yes"]):
                 print("\nNoted. Running the random password generator now.")
-                pw = rpw.makepword()
+                pw = pwg.makepword()
             else:
                 pw = input("\nNoted. What password would you like to use?\n> ")
 
@@ -357,7 +357,7 @@ def interface():
             
             if(pw_question.lower() in ["y", "yes"]):
                 print("\nNoted. Running the random password generator now.")
-                pw = rpw.makepword()
+                pw = pwg.makepword()
             else:
                 pw = input("\nNoted. What new password would you like to change to?\n> ")
 
