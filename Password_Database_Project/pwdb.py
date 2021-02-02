@@ -39,7 +39,7 @@ def initiate():
 def guide():
     guide = []
     guide_headers = ["Available Commands", "Descriptions"]
-    guide.append("ne (new entry): Adds a new organization, category, username, and password to the databaase.".split(":"))
+    guide.append("ne (new entry): Adds a new organization, category, username, and password to the database.".split(":"))
     guide.append("de (delete entry): Remove entry data from the database.".split(":"))
     guide.append("ie (insert entry): Inserts entry data into a specified id in the database.".split(":"))
     guide.append("re (restore entry): Restores deleted entry data to its original state prior to deletion.".split(":"))
@@ -128,7 +128,7 @@ def orgcheck(org):
             org = input("\nThe organization that you entered does not exist in this database. Please try again.\nWhat is the organization that you want to remove from the database?\n> ")
 
     else:
-        print("\nThe database is currently empty.Please try again when there are entries in the database.\nTerminating command...")
+        print("\nThe database is currently empty. Please try again when there are entries in the database.\nTerminating command...")
         return False
 
     return org
@@ -226,7 +226,7 @@ def interface():
         if(command == "re"):
             restore_confirmation = input("\nWould you like to restore the most recently deleted entry?\n> ")
             while(restore_confirmation.lower() not in ["y", "yes", "n", "no"]):
-                restore_confirmation = input("\nYour response is not clear. Please respond with yes or no.\nWould you like to delete an entry from the database?\n> ")
+                restore_confirmation = input("\nYour response is not clear. Please respond with yes or no.\nWould you like to restore an entry from the database?\n> ")
 
             with open(".jar.pkl", "rb") as f:
                 jars = pickle.load(f)
