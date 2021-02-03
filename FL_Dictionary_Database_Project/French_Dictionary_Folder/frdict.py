@@ -145,7 +145,7 @@ def interface():
                 recentdel = cursor.execute("SELECT * FROM dictionary WHERE Fre_Word = ?", (word.lower(),)).fetchone()[:]
                 jar.append(recentdel)
 
-                with open('jar.pkl', 'wb') as f:
+                with open('dict.pkl', 'wb') as f:
                     pickle.dump(jar,f)
 
                 count = cursor.execute("SELECT COUNT(ID) FROM dictionary").fetchone()[0]
@@ -192,7 +192,7 @@ def interface():
             while(restore_confirmation.lower() not in ["y", "yes", "n", "no"]):
                 restore_confirmation = input("\nYour response is not clear. Please respond with yes or no.\nWould you like to restore an entry from the dictionary?\n> ")
 
-            with open("jar.pkl", "rb") as f:
+            with open("dict.pkl", "rb") as f:
                 jars = pickle.load(f)
 
             if(restore_confirmation.lower() in ["y", "yes"]):
@@ -202,7 +202,7 @@ def interface():
                     print("\nThere are no recently deleted entries.\nTerminating command...")
                     continue
 
-                with open("jar.pkl", "wb") as f:
+                with open("dict.pkl", "wb") as f:
                     pickle.dump(jars,f)
 
                 count = cursor.execute("SELECT COUNT(ID) FROM dictionary").fetchone()[0]
@@ -225,7 +225,7 @@ def interface():
                     for i,val in enumerate(jars):
                         if(word.lower() in val):
                             priordel = jars.pop(i)
-                            with open("jar.pkl", "wb") as f:
+                            with open("dict.pkl", "wb") as f:
                                 pickle.dump(jars,f)
 
                             count = cursor.execute("SELECT COUNT(ID) FROM dictionary").fetchone()[0]
