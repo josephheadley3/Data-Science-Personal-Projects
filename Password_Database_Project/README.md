@@ -13,3 +13,7 @@ tabular display of the database to the user, orgcheck() method to check for the 
 that the user may search for in the database and interface() method to interpret user input commands.
 
 3. Display Example: Here are screenshots of how the database appears in my terminal.
+
+![](Password_Database_Screenshot01.png)
+
+![](Password_Database_Screenshot02.png)
