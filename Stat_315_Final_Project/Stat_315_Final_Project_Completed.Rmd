@@ -1,0 +1,220 @@
+---
+title: "Stat 315 Final Project"
+author: "Joseph Headley"
+date: "5/26/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Library Imports
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(jsonlite)
+library(tidytext)
+library(reshape2)
+library(recommenderlab)
+```
+
+# Functions
+
+```{r}
+GetSentiment <- function(comment){
+  
+    # remove any new lines
+    review <- gsub("\n","",comment)
+
+    # tokenize
+    tokens <- tibble(text = review) %>% unnest_tokens(word, text)
+
+    # get the sentiment from each review: 
+    sentiment_df <- tokens %>%
+      inner_join(get_sentiments("bing")) %>% # pull out only sentiment words
+      count(sentiment) %>% # count the # of positive & negative words
+      spread(sentiment, n, fill = 0) %>% # made data wide rather than narrow
+      mutate(user_id = reviews$user_id[reviews$text == comment][1]) %>% # add the user id
+      mutate(business_id = reviews$business_id[reviews$text == comment][1]) %>% # add the business id
+      #mutate(name = businesses$name[businesses$business_id == reviews$business_id[reviews$text == comment][1]]) %>% # add the name of the business
+      mutate(rating = reviews$stars[reviews$text == comment][1]) %>% # add the user ratings
+      mutate(gval = ifelse("positive" %in% names(.), gval <- positive, 
+             gval <- 0)) %>%
+      mutate(bval = ifelse("negative" %in% names(.), bval <- negative, 
+             bval <- 0)) %>%
+      mutate(review_score = gval/(gval + bval)) %>% # add user review sentiment analysis score
+      mutate(sentiment_score = (rating + review_score)/2)
+      
+    #sentiment_df <- subset(sentiment_df, select = -c(positive, negative))
+    sentiment_df <- sentiment_df[, !(names(sentiment_df) %in% c("positive", "negative", "gval", "bval", "review_score", "rating"))]
+
+    # return our sentiment dataframe
+    return(sentiment_df)
+}
+```
+
+```{r}
+MakeSentiment <- function(comment, business_name, stars){
+  
+    # remove any new lines
+    review <- gsub("\n","",comment)
+
+    # tokenize
+    tokens <- tibble(text = review) %>% unnest_tokens(word, text)
+
+    # get the sentiment from each review: 
+    sentiment_df <- tokens %>%
+      inner_join(get_sentiments("bing")) %>% # pull out only sentiment words
+      count(sentiment) %>% # count the # of positive & negative words
+      spread(sentiment, n, fill = 0) %>% # made data wide rather than narrow
+      mutate(user_id = "New User") %>% # add the user id
+      mutate(business_id = businesses$business_id[businesses$name == business_name][1]) %>% # add the business id
+      mutate(rating = stars) %>% # add the user ratings
+      mutate(gval = ifelse("positive" %in% names(.), gval <- positive, gval <- 0)) %>%
+      mutate(bval = ifelse("negative" %in% names(.), bval <- negative, bval <- 0)) %>%
+      mutate(review_score = gval/(gval + bval)) %>% # add user review sentiment analysis score
+      mutate(sentiment_score = (rating + review_score)/2)
+      
+    sentiment_df <- sentiment_df[, !(names(sentiment_df) %in% c("positive", "negative", "gval", "bval", "review_score", "rating"))]
+
+    # return our sentiment dataframe
+    return(sentiment_df)
+}
+```
+
+```{r warning=FALSE}
+Recommendation <- function(comment1, comment2, comment3, business_name1, business_name2, business_name3, stars1, stars2, stars3){
+  busn_sent <- rbind(busn_sent, MakeSentiment(comment1, business_name1, stars1))
+  busn_sent <- rbind(busn_sent, MakeSentiment(comment2, business_name2, stars2))
+  busn_sent <- rbind(busn_sent, MakeSentiment(comment3, business_name3, stars3))
+  
+  sentiment_mat <- reshape2::dcast(data = busn_sent, user_id ~ business_id, mean, value.var = "sentiment_score", na.rm = T)
+  rownames(sentiment_mat) <- sentiment_mat[,1]
+  sentiment_mat <- as.matrix(sentiment_mat[,-1])
+  sentiment_mat = as(sentiment_mat, "realRatingMatrix")
+  
+  rec_mod <- Recommender(sentiment_mat[1:(length(table(busn_sent$user_id))-1)], method = "UBCF", param=list(method="Cosine",nn=10))
+  
+  Top_5_df=tibble()
+  Top_5_pred <- predict(rec_mod, sentiment_mat[which(rownames(sentiment_mat) == "New User")], n=5)
+  Top_5_List <- as(Top_5_pred, "list")
+  cur_Top_5_df <- tibble(business_id = Top_5_List[[1]])
+  cur_Top_5_df <- left_join(cur_Top_5_df, businesses, by="business_id")
+  if(length(cur_Top_5_df$name) == 0) {
+    Top_5_df <- rbind(Top_5_df, rep(NA,5))
+  }
+  if(length(cur_Top_5_df$name) > 0 & length(cur_Top_5_df$name) < 5) {
+    filler <- c(cur_Top_5_df$name, rep(NA, 5-length(cur_Top_5_df$name)))
+    Top_5_df <- rbind(Top_5_df, filler)
+  }
+  else {
+    Top_5_df <- rbind(Top_5_df, t(cur_Top_5_df$name))
+  }
+  rownames(Top_5_df) <- rownames(sentiment_mat)[which(rownames(sentiment_mat) == "New User")]
+  return(Top_5_df)
+}
+```
+
+# Data Analysis
+
+```{r}
+reviews<-jsonlite::stream_in(textConnection(readLines("Datasets/yelp_academic_dataset_review.json", n=1000000)),verbose=F)
+businesses<-jsonlite::stream_in(textConnection(readLines("Datasets/yelp_academic_dataset_business.json", n=100000)),verbose=F)
+```
+
+```{r}
+business_table <- table(reviews$business_id)
+user_table <- table(reviews$user_id)
+```
+
+```{r}
+top500users <- names(sort(user_table, decreasing = T)[1:500])
+top500businesses <- names(sort(business_table, decreasing = T)[1:500])
+```
+
+```{r message=FALSE}
+busn_sent <- tibble()
+for (i in 1:60) {
+  cur_user <- top500users[i]
+  businessids <- reviews$business_id[reviews$user_id == cur_user]
+  for (j in 1:10) {
+    cur_business <- names(table(businessids[which(businessids %in% top500businesses)]))[j]
+    cur_review <- reviews$text[reviews$user_id == cur_user & reviews$business_id == cur_business]
+    if (length(cur_review) > 1) {
+      for (k in 1:length(cur_review)) {
+        busn_sent <- rbind(busn_sent, GetSentiment(cur_review[k]))
+      }
+    }
+    else{
+      busn_sent <- rbind(busn_sent, GetSentiment(cur_review[1]))
+    }
+  }
+  print(paste("Completed User", as.character(i)))
+}
+#busn_sent
+```
+
+```{r}
+sentiment_mat <- reshape2::dcast(data = busn_sent, user_id ~ business_id, mean, value.var = "sentiment_score", na.rm = F)
+rownames(sentiment_mat) <- sentiment_mat[,1]
+sentiment_mat <- as.matrix(sentiment_mat[,-1])
+sentiment_mat = as(sentiment_mat, "realRatingMatrix")
+```
+
+```{r}
+rec_mod <- Recommender(sentiment_mat[1:40], method = "UBCF", param=list(method="Cosine",nn=10))
+```
+
+```{r warning=FALSE}
+Top_5_df=tibble()
+for (i in 41:length(table(busn_sent$user_id))) {
+  Top_5_pred <- predict(rec_mod, sentiment_mat[i], n=5)
+  Top_5_List <- as(Top_5_pred, "list")
+  cur_Top_5_df <- tibble(business_id = Top_5_List[[1]])
+  cur_Top_5_df <- left_join(cur_Top_5_df, businesses, by="business_id")
+  if(length(cur_Top_5_df$name) == 0) {
+    Top_5_df <- rbind(Top_5_df, rep(NA,5))
+  }
+  if(length(cur_Top_5_df$name) > 0 & length(cur_Top_5_df$name) < 5) {
+    filler <- c(cur_Top_5_df$name, rep(NA, 5-length(cur_Top_5_df$name)))
+    Top_5_df <- rbind(Top_5_df, filler)
+  }
+  else {
+    Top_5_df <- rbind(Top_5_df, t(cur_Top_5_df$name))
+  }
+  #print(cur_Top_5_df$name)
+  #print(i)
+}
+rownames(Top_5_df) <- paste("User", as.character(41:length(table(busn_sent$user_id))))
+Top_5_df
+```
+
+```{r}
+user_recs <- table(c(names(table(Top_5_df$V1)),names(table(Top_5_df$V2)),names(table(Top_5_df$V3)),names(table(Top_5_df$V4)),names(table(Top_5_df$V5))))
+user_recs <- as.data.frame(user_recs)
+```
+
+```{r}
+ggplot(data = user_recs, aes(x=reorder(Var1,Freq), y=Freq)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 75, hjust = 1))
+```
+
+```{r}
+test <- user_recs$Var1[user_recs$Freq >= 2]
+test
+
+freqrecs <- c()
+for (i in 1:length(test)) {
+  curfreqrec <- test[i]
+  curcategories <- strsplit(businesses$categories[curfreqrec == businesses$name][1], split = ", ")[[1]]
+  for (j in 1:length(curcategories)) {
+    freqrecs <- c(freqrecs, curcategories[j])
+  }
+}
+freqrecs_df <- as.data.frame(table(freqrecs))
+freqrecs_df
+```
+
+```{r}
+ggplot(data = freqrecs_df, aes(x = reorder(freqrecs,Freq), y = Freq)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+```
