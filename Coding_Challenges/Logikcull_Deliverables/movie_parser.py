@@ -2,6 +2,9 @@
 The following script is run using the command "python3 movie_parser.py" in the command terminal.
 The script does not take any command line input, however the one prerequsite is that this script
 should be located in the same directory as the file "movies.csv".
+
+A folder with all of the deliverables required of this challenge can be found at the following Github link:
+https://github.com/josephheadley3/Data-Science-Personal-Projects/tree/master/Coding_Challenges/Logikcull_Deliverables
 """
 
 import pandas as pd
